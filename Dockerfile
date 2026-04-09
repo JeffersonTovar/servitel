@@ -1,13 +1,7 @@
-FROM php:8.2-fpm
+FROM php:8.2-cli
 
 RUN apt-get update && apt-get install -y \
-  git \
-  curl \
-  zip \
-  unzip \
-  libpng-dev \
-  libonig-dev \
-  libxml2-dev
+  git curl zip unzip libpng-dev libonig-dev libxml2-dev
 
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
@@ -17,6 +11,16 @@ WORKDIR /var/www
 
 COPY . .
 
-RUN composer install
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 
-CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
+RUN [ -f .env ] || cp .env.example .env
+RUN php artisan key:generate
+
+RUN chmod -R 775 storage bootstrap/cache
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+EXPOSE 8000
+
+CMD ["/entrypoint.sh"]

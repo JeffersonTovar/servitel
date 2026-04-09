@@ -19,7 +19,7 @@ Proyecto desarrollado como prueba técnica para el cargo de Ingeniero Senior Bac
 
 ```bash
 git clone git@github.com:JeffersonTovar/servitel.git
-cd api-items
+cd servitel
 ```
 ---
 
