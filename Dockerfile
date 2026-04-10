@@ -17,6 +17,7 @@ RUN [ -f .env ] || cp .env.example .env
 RUN php artisan key:generate
 
 RUN chmod -R 775 storage bootstrap/cache
+RUN apt-get update && apt-get install -y netcat-openbsd
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh

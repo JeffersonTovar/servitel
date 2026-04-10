@@ -28,6 +28,17 @@ cd servitel
 ```bash
 docker-compose up -d --build
 ```
+
+* Ejecutar migraciones (obligatorio la primera vez)
+
+Una vez los contenedores estén arriba, ejecutar:
+
+```bash
+docker exec -it servitel-app-1 php artisan migrate --force
+```
+
+***Las migraciones no se ejecutan automáticamente al levantar el contenedor para evitar problemas de sincronización entre servicios (MySQL puede tardar en inicializar completamente). Por esta razón, se ejecutan manualmente después del levantamiento del entorno.***
+
 ---
 
 3. Accesos
